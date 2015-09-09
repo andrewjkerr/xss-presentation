@@ -1,6 +1,53 @@
 footer: XSS | Andrew Kerr
 slidenumbers: true
 
+# [fit] UF Student InfoSec Team
+## September 8, 2015
+## \#ufsit on Freenode
+
+---
+
+## Announcements
+
+---
+
+## Upcoming CTF: CSAW
+
+---
+
+## CSAW CTF (Qualifiers)
+- September 18 @ 6pm - September 20 @ 6pm
+
+---
+
+## CSAW CTF (Qualifiers)
+- September 18 @ 6pm - September 20 @ 6pm
+- If we qualify, we get to send a team of undergrads to national CTF
+
+---
+
+## MMA CTF Recap
+
+---
+
+## MMA CTF Recap
+- Lots of people there on Friday!
+- Left Friday night in top 15%
+
+![inline](img/mma-standing.png)
+
+^ We solved quite a few challenges which means that...
+
+---
+
+## We want your writeups!
+
+^ Send 'em in! Could be link to your own site or GitHub Gist.
+
+^ OK, cool, let's dive in now...
+
+---
+
 # Cross-site Scripting
 ## (Also known as XSS)
 ### Andrew Kerr | Sept 8, 2015
@@ -31,11 +78,11 @@ slidenumbers: true
 - Secretary of UFSIT for > 2yrs
 - Full stack web developer
 
-^ Primarily on Rails
+^ Primarily on Rails; loved security, but liked dev
 
 ---
 
-![left](tumblr.gif)
+![left](img/tumblr.gif)
 ## whoami
 
 - Fifth year Software Engineering @ UF
@@ -43,11 +90,13 @@ slidenumbers: true
 - Full stack web developer
 - Former security intern at Tumblr
 
+^ Turns out you can do both!
+
 ^ Worked on TFA enhancements, Content-Security-Policy, patching vulnerabilities, and more!
 
 ---
 
-![left](blockscore.jpg)
+![left](img/blockscore.jpg)
 ## whoami
 
 - Fifth year Software Engineering @ UF
@@ -57,28 +106,6 @@ slidenumbers: true
 - Former intern at BlockScore
 
 ^ Security specifics - audit for auth bypass, TFA, rate limiting
-
----
-
-## MMA CTF Recap
-
----
-
-## MMA CTF Recap
-- Lots of people there on Friday!
-- Left Friday night in top 15%
-
-![inline](mma-standing.png)
-
-^ We solved quite a few challenges which means that...
-
----
-
-## We want your writeups!
-
-^ Send 'em in! Could be link to your own site or GitHub Gist.
-
-^ OK, cool, let's dive in now...
 
 ---
 
@@ -104,7 +131,7 @@ slidenumbers: true
 
 ---
 
-![fit](tumblr-form.png)
+![fit](img/tumblr-form.png)
 
 ^ Let's say we have a form
 
@@ -112,13 +139,13 @@ slidenumbers: true
 
 ---
 
-![fit](tumblr-form-filled.png)
+![fit](img/tumblr-form-filled.png)
 
 ^ Sure, let's put some JavaScript in there
 
 ---
 
-![fit](tumblr-xss.png)
+![fit](img/tumblr-xss.png)
 
 ^ Woah there! That's cool!
 
@@ -149,7 +176,7 @@ slidenumbers: true
 
 ---
 
-### Why does this work?
+## Why does this work?
 
 - Browser is tricked into thinking the code is part of the site
 - Backend server does not sanitize input correctly
@@ -217,20 +244,20 @@ slidenumbers: true
 
 ---
 
-![fit](twitter-xss.png)
+![fit](img/twitter-xss.png)
 
 ^ https://twitter.com/dergeruhn/status/476764918763749376
 
 ---
 
-![left](twitter-xss.png)
+![left](img/twitter-xss.png)
 ## Remember this?
 
 - :heart: emoji broke XSS sanitization on TweetDeck
 
 ---
 
-![left](twitter-xss.png)
+![left](img/twitter-xss.png)
 ## Remember this?
 
 - :heart: emoji broke XSS sanitization on TweetDeck
@@ -238,7 +265,7 @@ slidenumbers: true
 
 ---
 
-![left](twitter-xss.png)
+![left](img/twitter-xss.png)
 ## Remember this?
 
 - :heart: emoji broke XSS sanitization on TweetDeck
@@ -251,7 +278,7 @@ slidenumbers: true
 
 ---
 
-![fit](ap-hack.png)
+![fit](img/ap-hack.png)
 
 ^ Twitter and social media has real-world consequences now
 
@@ -355,7 +382,7 @@ echo '<h1>Search results for: ' . $search_query . '</h1>;
 
 ---
 
-![fit](reflected-xss.png)
+![fit](img/reflected-xss.png)
 
 ^ Reflected because it's a search result!
 
@@ -415,15 +442,11 @@ A: UNSANITIZED USER INPUT
     - Only way for end user to protect themselves is to disable JS
 - Example: form post storing XSS
 
----
-
-## Stored XSS Example
-
 ^ Remember earlier?
 
 ---
 
-![fit](twitter-xss.png)
+![fit](img/twitter-xss.png)
 
 ^ https://twitter.com/dergeruhn/status/476764918763749376
 
@@ -437,7 +460,7 @@ A: UNSANITIZED USER INPUT
 
 - Posted 'but most of all, samy is my hero' to victims
 
-![inline](samy-myspace.png)
+![inline](img/samy-myspace.png)
 
 ^ Still there!
 
@@ -449,7 +472,7 @@ A: UNSANITIZED USER INPUT
 - Fastest spreading virus of all time
     - 1+ million runs in ~20hrs
 
-![inline](samy-myspace.png)
+![inline](img/samy-myspace.png)
 
 ^ Still there!
 
@@ -516,6 +539,8 @@ Q: What's the issue?
 A: UNSANITIZED USER INPUT
 
 ^ Unsanitized on both input AND output
+
+^ Ask: How would you exploit this?
 
 ---
 
@@ -620,6 +645,16 @@ var title = parse_get_params('title');
 $('.page-header').html("<h1>" + title + "</h1>");
 ```
 
+---
+
+## Protecting Against XSS
+
+```javascript
+// Pretend parse_get_params is imeplemented :)
+var title = parse_get_params('title');
+$('.page-header').html("<h1>" + title + "</h1>");
+```
+
 - jQuery provides a `.html` AND `.text`.
 
 ---
@@ -637,6 +672,17 @@ $('.page-header').html("<h1>" + title + "</h1>");
 
 ---
 
+## Let's look at the documentation!
+
+---
+
+## Let's look at the documentation!
+### (Aka RTFM)
+
+^ Docs are _super duper duper_ important
+
+---
+
 ## Protecting Against XSS
 
 > Set the text contents of the matched elements.
@@ -650,7 +696,7 @@ $('.page-header').html("<h1>" + title + "</h1>");
 ---
 
 ## Protecting Against XSS
-![left fit](jquery-example.png)
+![left fit](img/jquery-example.png)
 
 ```html
 <html>
@@ -727,7 +773,7 @@ $('.page-header').html("<h1>" + title + "</h1>");
 ---
 
 ## Protecting Against XSS
-![left fit](nsa-xss.png)
+![left fit](img/nsa-xss.png)
 
 - Or, ya know, read the NSA's recommendations.
 - https://www.nsa.gov/ia/_files/factsheets/xss_iad_factsheet_final_web.pdf
@@ -744,7 +790,7 @@ $('.page-header').html("<h1>" + title + "</h1>");
 
 ---
 
-![fit](just-do-it.gif)
+![fit](img/just-do-it.gif)
 
 ^ In order to test, we need to know how to...
 
